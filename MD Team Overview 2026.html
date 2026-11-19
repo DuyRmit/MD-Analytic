@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>MD Team Overview 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f7fb;--card:#fff;--tx:#1b2033;--mu:#6b7287;--bd:#e4e7f0;--grid:#e9ecf3}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#13151d;--card:#1c1f2b;--tx:#eceef6;--mu:#9aa1b8;--bd:#2c3042;--grid:#2c3042}}
+:root[data-theme="dark"]{--bg:#13151d;--card:#1c1f2b;--tx:#eceef6;--mu:#9aa1b8;--bd:#2c3042;--grid:#2c3042}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.5 "Source Sans 3",system-ui,sans-serif;padding:20px}
+h1{font-size:22px;margin:0}p.s{color:var(--mu);margin:2px 0 16px}
+.g{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-bottom:14px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;min-width:0}
+.c h2{font-size:15px;margin:0 0 2px}.c p{color:var(--mu);margin:0 0 10px;font-size:12px}
+.k{font-size:30px;font-weight:700}.k small{font-size:12px;color:var(--mu);font-weight:400}
+.w{overflow-x:auto}table{border-collapse:collapse;width:100%}th,td{padding:6px 10px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap}
+td.n,th.n{text-align:center}.cv{height:290px;position:relative}
+</style></head><body>
+<h1>MD Team — Overview 2026</h1><p class="s">Who did what and how the work is divided · Duy, Quyen, Dan (source: MD Tickets board, Dec 2025 – 19 Nov 2026)</p>
+<div class="g" id="kpi"></div>
+<div class="c" style="margin-bottom:14px"><h2>Key takeaways</h2><p>Summary of the main points from the data</p><div class="w"><table>
+<tr><th>Topic</th><th>Finding</th></tr>
+<tr><td><b>Workload</b></td><td>780 tickets in 2026. Dan 305 (39%), Duy 273 (35%), Quyen 211 (27%). The split is fairly even, Dan carries the most.</td></tr>
+<tr><td><b>Specialisation</b></td><td>Duy leads on html (60 vs 26 / 24). Dan leads on h5p (85 vs 35 / 30). Quyen is strongest on Infographic (34) and Decorative images (26). Formatting, Genial.ly and Infographic are shared by all three.</td></tr>
+<tr><td><b>Who requests</b></td><td>No LD is tied to one MD. Each of the top LDs (Uyen, Nga, Binh, Nhung) spreads requests across all three MDs, so work is distributed by capacity and skill rather than by relationship.</td></tr>
+<tr><td><b>Trend</b></td><td>Total volume peaked in May (97) and fell to 45–51 per month in Aug–Oct (Nov is partial). Dan grew from 5 tickets in Jan to about 40 per month in Mar–Jun. Duy and Quyen peaked in Jan and have been steadier since.</td></tr>
+<tr><td><b>Urgency</b></td><td>Urgent tickets: Duy 45 (16% of his tickets), Dan 37 (12%), Quyen 20 (9%). Duy takes the most urgent work.</td></tr>
+<tr><td><b>Handling time</b></td><td>Average minutes per ticket: Dan 34, Duy 46, Quyen 56 (median 30 / 40 / 40). Only about a third of tickets have time logged, so this is indicative only.</td></tr>
+<tr><td><b>Peer review</b></td><td>Review load is uneven: Duy reviewed about 129 pieces of MD work and Quyen about 102, while Dan reviewed about 10. Duy and Quyen review each other and Dan.</td></tr>
+</table></div></div>
+<div class="c" style="margin-bottom:14px"><h2>Overview table</h2><p>Tickets with several MDs count once for each person</p><div class="w"><table id="ov"></table></div></div>
+<div class="g"><div class="c"><h2>Ticket share</h2><p>Percentage of all tickets</p><div class="cv"><canvas id="a"></canvas></div></div>
+<div class="c" style="grid-column:span 2"><h2>Tickets per month by MD</h2><p>By start date</p><div class="cv"><canvas id="b"></canvas></div></div></div>
+<div class="g"><div class="c"><h2>Job types by MD</h2><p>Top 10 job types</p><div class="cv" style="height:380px"><canvas id="c"></canvas></div></div>
+<div class="c"><h2>Which LD requests work from which MD</h2><p>Top 8 ticket authors</p><div class="cv" style="height:380px"><canvas id="d"></canvas></div></div></div>
+<div class="g"><div class="c"><h2>Average handling time per ticket (min)</h2><p>From the Time taken column; single-MD tickets with time logged only</p><div class="cv"><canvas id="e"></canvas></div></div>
+<div class="c"><h2>Average handling time by job type (min)</h2><p>Shown only with at least 3 tickets</p><div class="cv"><canvas id="f"></canvas></div></div>
+<div class="c"><h2>Total hours logged per month</h2><p>By start date</p><div class="cv"><canvas id="g"></canvas></div></div></div>
+<div class="c"><h2>Who reviews whose work</h2><p>Row = reviewer, column = author of the work reviewed. Darker = more reviews</p><div class="w"><table id="rv"></table></div></div>
+<p class="s" id="note" style="margin-top:14px"></p>
+<script>
+const D={"cnt": {"Duy": 273, "Quyen": 211, "Dan": 305}, "months": ["2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09", "2026-10", "2026-11"], "mon": {"Duy": [1, 59, 16, 21, 27, 29, 25, 26, 11, 12, 19, 16], "Quyen": [0, 32, 7, 14, 16, 27, 21, 22, 11, 12, 17, 9], "Dan": [0, 5, 23, 48, 39, 41, 41, 27, 30, 21, 16, 7]}, "jobs": ["h5p", "html", "Infographic Image", "Formatting", "Genial.ly", "Decorative Image", "Design", "Padlet", "Other", "Illustrative image"], "job": {"Duy": [35, 60, 35, 45, 32, 21, 12, 7, 13, 9], "Quyen": [30, 24, 34, 21, 18, 26, 14, 13, 9, 6], "Dan": [85, 26, 38, 37, 38, 40, 13, 11, 7, 9]}, "auths": ["Binh Nguyen", "Uyen Nguyen", "Nhung Hong Tran", "Nga Chu", "Le Huong Giang", "(blank)", "Huy Tang", "Nguyen Minh Khue"], "auth": {"Duy": [48, 52, 56, 44, 29, 15, 12, 9], "Quyen": [37, 37, 45, 39, 18, 12, 15, 9], "Dan": [72, 58, 40, 51, 34, 14, 13, 13]}, "urg": {"Duy": 45, "Quyen": 20, "Dan": 37}, "rv_rows": ["Binh Nguyen", "Duy", "Dan", "Quyen", "Uyen Nguyen"], "rv_cols": ["Binh Nguyen", "Duy", "Le Huong Giang", "Nga Chu", "Nguyen Minh Khue", "Nhung Hong Tran", "Dan", "Quyen", "Uyen Nguyen"], "rv": [[0, 0, 0, 0, 0, 0, 0, 1, 0], [1, 0, 0, 3, 3, 3, 64, 65, 2], [4, 2, 2, 0, 1, 0, 0, 8, 9], [4, 52, 3, 0, 0, 3, 50, 0, 0], [0, 0, 0, 0, 0, 0, 1, 0, 0]], "total": 780, "nodate": 41, "t": {"Duy": {"n": 81, "of": 263, "avg": 45.6, "med": 40.0, "hrs": 61.6}, "Quyen": {"n": 44, "of": 207, "avg": 56.4, "med": 40.0, "hrs": 41.3}, "Dan": {"n": 123, "of": 300, "avg": 33.7, "med": 30.0, "hrs": 69.0}}, "tjobs": ["h5p", "html", "Infographic Image", "Formatting", "Genial.ly", "Decorative Image", "Design", "Padlet"], "tjob": {"Duy": [37.9, 37.2, 55.3, 46.0, 73.6, 34.0, 30.0, null], "Quyen": [41.2, 28.8, 50.6, 46.2, null, null, 27.0, null], "Dan": [24.2, 31.5, 44.7, 40.0, 70.8, 22.9, 50.0, 8.8]}, "tmon": ["2025-12", "2026-01", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09", "2026-10", "2026-11"], "tmonv": {"Duy": [0.7, 5.2, 2.3, 8.2, 11.6, 5.8, 5.8, 12.5, 7.3], "Quyen": [0.0, 0.0, 4.0, 4.6, 9.0, 2.1, 2.2, 5.0, 4.0], "Dan": [0.0, 0.0, 1.8, 17.6, 16.5, 15.2, 7.9, 5.1, 4.6]}};const O=['Duy','Quyen','Dan'];const C={Duy:'#2f6fd6',Quyen:'#e8833a',Dan:'#2aa876',};
+const tx=getComputedStyle(document.documentElement).getPropertyValue('--mu')||'#888';Chart.defaults.color='#8a90a6';Chart.defaults.borderColor='rgba(140,148,170,.2)';
+const T=O.reduce((s,m)=>s+D.cnt[m],0),nM=D.months.length-1;
+document.getElementById('kpi').innerHTML=O.map(m=>`<div class="c"><div style="color:${C[m]};font-weight:600">${m}</div><div class="k">${D.cnt[m]} <small>ticket · ${(D.cnt[m]/T*100).toFixed(0)}%</small></div></div>`).join('');
+const topN=(m,a,b)=>a.map((x,i)=>[x,b[m][i]]).sort((p,q)=>q[1]-p[1]).slice(0,3).map(p=>p[0]+' ('+p[1]+')').join(', ');
+document.getElementById('ov').innerHTML='<tr><th>MD</th><th class="n">Tickets</th><th class="n">%</th><th class="n">Avg / month</th><th class="n">Urgent</th><th class="n">Time logged</th><th class="n">Avg min</th><th class="n">Median</th><th class="n">Total hrs</th><th>Top job types</th><th>Top requesting LDs</th></tr>'+O.map(m=>`<tr><td style="color:${C[m]};font-weight:600">${m}</td><td class="n">${D.cnt[m]}</td><td class="n">${(D.cnt[m]/T*100).toFixed(0)}%</td><td class="n">${(D.mon[m].reduce((a,b)=>a+b,0)/nM).toFixed(1)}</td><td class="n">${D.urg[m]}</td><td class="n">${D.t[m].n}/${D.t[m].of}</td><td class="n">${D.t[m].avg}</td><td class="n">${D.t[m].med}</td><td class="n">${D.t[m].hrs}</td><td>${topN(m,D.jobs,D.job)}</td><td>${topN(m,D.auths.filter(x=>x!='(blank)'),{[m]:D.auth[m].filter((v,i)=>D.auths[i]!='(blank)')})}</td></tr>`).join('');
+new Chart(a,{type:'doughnut',data:{labels:O,datasets:[{data:O.map(m=>D.cnt[m]),backgroundColor:O.map(m=>C[m]),borderWidth:0}]},options:{maintainAspectRatio:false,cutout:'60%',plugins:{legend:{position:'bottom'}}}});
+new Chart(b,{type:'bar',data:{labels:D.months,datasets:O.map(m=>({label:m,data:D.mon[m],backgroundColor:C[m]}))},options:{maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true}},plugins:{legend:{position:'bottom'}}}});
+new Chart(c,{type:'bar',data:{labels:D.jobs,datasets:O.slice(0,3).map(m=>({label:m,data:D.job[m],backgroundColor:C[m]}))},options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
+new Chart(d,{type:'bar',data:{labels:D.auths,datasets:O.map(m=>({label:m,data:D.auth[m],backgroundColor:C[m]}))},options:{indexAxis:'y',maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true}},plugins:{legend:{position:'bottom'}}}});
+new Chart(e,{type:'bar',data:{labels:O,datasets:[{label:'Average',data:O.map(m=>D.t[m].avg),backgroundColor:O.map(m=>C[m])},{label:'Median',data:O.map(m=>D.t[m].med),backgroundColor:O.map(m=>C[m]+'88')}]},options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
+new Chart(f,{type:'bar',data:{labels:D.tjobs,datasets:O.map(m=>({label:m,data:D.tjob[m],backgroundColor:C[m]}))},options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
+new Chart(g,{type:'bar',data:{labels:D.tmon,datasets:O.map(m=>({label:m,data:D.tmonv[m],backgroundColor:C[m]}))},options:{maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true}},plugins:{legend:{position:'bottom'}}}});
+const mx=Math.max(...D.rv.flat());
+document.getElementById('rv').innerHTML='<tr><th>Reviewer ↓ / Author →</th>'+D.rv_cols.map(c=>`<th class="n">${c}</th>`).join('')+'</tr>'+D.rv.map((r,i)=>`<tr><td><b>${D.rv_rows[i]}</b></td>`+r.map(v=>`<td class="n" style="background:rgba(47,111,214,${v?0.12+0.7*v/mx:0});${v>mx*.5?'color:#fff':''}">${v||''}</td>`).join('')+'</tr>').join('');
+document.getElementById('note').textContent=`Notes: ${D.total} tickets (auto-archived html tickets excluded). ${D.nodate} tickets have no start date and are missing from the monthly charts. Handling time is self-reported by MDs in the Time taken column and exists for only ${O.reduce((a,m)=>a+D.t[m].n,0)} of ${O.reduce((a,m)=>a+D.t[m].of,0)} tickets, so treat it as indicative.`;
+</script></body></html>
